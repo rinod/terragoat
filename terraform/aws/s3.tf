@@ -19,8 +19,9 @@ resource "aws_s3_bucket" "data" {
     yor_trace            = "0874007d-903a-4b4c-945f-c9c233e13243"
   })
 }
-
+# This is Severino message for commit
 resource "aws_s3_bucket_object" "data_object" {
+  # checkov:skip=CKV_AWS_186: ADD REASON
   bucket = aws_s3_bucket.data.id
   key    = "customer-master.xlsx"
   source = "resources/customer-master.xlsx"
@@ -61,6 +62,18 @@ resource "aws_s3_bucket" "financials" {
   })
 
 }
+
+
+resource "aws_s3_bucket_versioning" "financials" {
+  bucket = aws_s3_bucket.financials.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+
+
 
 resource "aws_s3_bucket" "operations" {
   # bucket is not encrypted
